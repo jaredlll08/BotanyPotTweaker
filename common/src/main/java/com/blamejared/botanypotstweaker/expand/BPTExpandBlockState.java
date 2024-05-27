@@ -19,7 +19,7 @@ public class BPTExpandBlockState {
      * @return the converted display state
      */
     @ZenCodeType.Caster(implicit = true)
-    public static DisplayState asBlockState(BlockState blockState) {
+    public static DisplayState asDisplayState(BlockState blockState) {
         
         return new AgingDisplayState(blockState);
     }
