@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[39,)"
+license="MIT"
+[[mods]]
+modId="botanypotstweaker"
+version="${file.jarVersion}"
+displayName="BotanyPotsTweaker"
+updateJSONURL="https://updates.blamejared.com/get?n=botanypotstweaker&gv=1.20.1"
+authors="Jaredlll08"
+logoFile="icon.png"
+description='''
+Adds CraftTweaker support to Botany Pots
+'''
+[[dependencies.botanypotstweaker]]
+modId = "crafttweaker"
+mandatory = true
+versionRange = "[14.0.16,)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.botanypotstweaker]]
+modId = "bookshelf"
+mandatory = true
+versionRange = "[20.1.10,)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.botanypotstweaker]]
+modId = "botanypots"
+mandatory = true
+versionRange = "[13.0.32,)"
+ordering = "NONE"
+side = "BOTH"

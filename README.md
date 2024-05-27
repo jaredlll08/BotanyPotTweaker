@@ -1,1 +1,1 @@
-# BotanyPotTweaker
+# BotanyPotsTweaker
