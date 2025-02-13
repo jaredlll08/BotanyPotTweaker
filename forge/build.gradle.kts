@@ -54,7 +54,9 @@ tasks.create<TaskPublishCurseForge>("publishCurseForge") {
     mainFile.releaseType = CFG_Constants.RELEASE_TYPE_RELEASE
     mainFile.addJavaVersion("Java ${Versions.JAVA}")
     mainFile.addRequirement("crafttweaker")
-
+    mainFile.addRequirement("botany-pots")
+    mainFile.addRequirement("bookshelf")
+    mainFile.addModLoader("Forge")
     doLast {
         project.ext.set("curse_file_url", "${Properties.CURSE_HOMEPAGE}/files/${mainFile.curseFileId}")
     }
@@ -71,6 +73,9 @@ modrinth {
     loaders.add("forge")
     dependencies {
         required.project("crafttweaker")
+        required.project("botany-pots")
+        required.project("bookshelf-lib")
+
     }
 }
 

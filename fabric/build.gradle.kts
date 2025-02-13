@@ -49,6 +49,8 @@ tasks.create<TaskPublishCurseForge>("publishCurseForge") {
     mainFile.addJavaVersion("Java ${Versions.JAVA}")
     mainFile.addGameVersion(Versions.MINECRAFT)
     mainFile.addRequirement("crafttweaker")
+    mainFile.addRequirement("botany-pots")
+    mainFile.addRequirement("bookshelf")
     doLast {
         project.ext.set("curse_file_url", "${Properties.CURSE_HOMEPAGE}/files/${mainFile.curseFileId}")
     }
@@ -64,5 +66,7 @@ modrinth {
     uploadFile.set(tasks.remapJar.get())
     dependencies {
         required.project("crafttweaker")
+        required.project("botany-pots")
+        required.project("bookshelf-lib")
     }
 }
