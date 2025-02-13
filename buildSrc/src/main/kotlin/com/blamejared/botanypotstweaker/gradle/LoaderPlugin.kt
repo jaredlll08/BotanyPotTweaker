@@ -30,7 +30,7 @@ class LoaderPlugin : Plugin<Project> {
                 from(commonJava.sourceSets.getByName("main").resources)
             }
 
-            withType<JavaCompile> {
+            named<JavaCompile>("compileJava") {
                 source(commonJava(project).sourceSets.getByName("main").allSource)
             }
 
@@ -40,12 +40,6 @@ class LoaderPlugin : Plugin<Project> {
 
             named<Jar>("sourcesJar") {
                 from(commonJava(project).sourceSets.getByName("main").allSource)
-            }
-
-            if (project.name.equals("forge")) {
-                withType(Jar::class.java) {
-                    finalizedBy("reobfJar")
-                }
             }
 
         }

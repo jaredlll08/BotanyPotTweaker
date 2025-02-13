@@ -12,6 +12,13 @@ import org.openzen.zencode.java.ZenCodeType;
 @NativeTypeRegistration(value = AgingDisplayState.class, zenCodeName = "mods.botanypotstweaker.displaystate.AgingDisplayState")
 public class ExpandAgingDisplayState {
     
+    /**
+     * Creates a new AgingDisplayState from the given {@link BlockState}
+     *
+     * @param state The state to display
+     *
+     * @return a new display state from the given blockstate
+     */
     @ZenCodeType.StaticExpansionMethod
     public static AgingDisplayState of(BlockState state) {
         

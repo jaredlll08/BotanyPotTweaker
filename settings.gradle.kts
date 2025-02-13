@@ -18,3 +18,12 @@ rootProject.name = "BotanyPotsTweaker"
 include("common")
 include("fabric")
 include("forge")
+
+
+if (file("CraftTweaker-Annotation-Processors").exists()) {
+    includeBuild("CraftTweaker-Annotation-Processors") {
+        dependencySubstitution {
+            substitute(module("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors")).using(project(":"))
+        }
+    }
+}

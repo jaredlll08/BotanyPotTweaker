@@ -15,6 +15,15 @@ import org.openzen.zencode.java.ZenCodeType;
 @NativeTypeRegistration(value = DisplayState.class, zenCodeName = "mods.botanypotstweaker.displaystate.DisplayState")
 public class ExpandDisplayState {
     
+    /**
+     * Creates a display state from the given data.
+     *
+     * @param data the data to deserialize.
+     *
+     * @return A new display state from the given data.
+     *
+     * @docParam data {"block": {"block": "minecraft:diamond_block", "properties": {}}, "type": "botanypots:aging"}
+     */
     @ZenCodeType.StaticExpansionMethod
     public static DisplayState of(MapData data) {
         

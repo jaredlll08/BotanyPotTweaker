@@ -7,48 +7,42 @@ import net.darkhax.curseforgegradle.Constants as CFG_Constants
 plugins {
     id("com.blamejared.botanypotstweaker.default")
     id("com.blamejared.botanypotstweaker.loader")
-    id("net.minecraftforge.gradle") version ("[6.0,6.2)")
-    id("org.spongepowered.mixin") version ("0.7-SNAPSHOT")
+    id("net.neoforged.moddev.legacyforge")
     id("com.modrinth.minotaur")
 }
 
-mixin {
-    add(sourceSets.main.get(), "${Properties.MODID}.refmap.json")
-    config("${Properties.MODID}.mixins.json")
-    config("${Properties.MODID}.forge.mixins.json")
-}
+legacyForge {
+    version = "${Versions.MINECRAFT}-${Versions.FORGE}"
 
-minecraft {
-    mappings("official", Versions.MINECRAFT)
-    accessTransformer(file("src/main/resources/META-INF/accesstransformer.cfg"))
+    validateAccessTransformers = true
+
     runs {
-        create("client") {
-            taskName("Client")
-            workingDirectory(project.file("run"))
-            ideaModule("${rootProject.name}.${project.name}.main")
-            args("-mixin.config=${Properties.MODID}.mixins.json")
-            mods {
-                create(Properties.MODID) {
-                    source(sourceSets.main.get())
-                    source(project(":common").sourceSets.main.get())
-                }
-            }
+        register("client") {
+            client()
+        }
+        register("server") {
+            server()
+        }
+    }
+
+    mods {
+        register(Properties.MODID) {
+            sourceSet(sourceSets.main.get())
         }
     }
 }
 
+
 dependencies {
-    val mc = create("net.minecraftforge:forge:${Versions.MINECRAFT}-${Versions.FORGE}")
-    "minecraft"(mc)
     implementation(project(":common"))
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+
     val crt = "com.blamejared.crafttweaker:CraftTweaker-forge-${Versions.MINECRAFT}:${Versions.CRAFTTWEAKER}"
-    implementation(fg.deobf(crt))
+    modImplementation(crt)
     annotationProcessor("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:${Versions.CRAFTTWEAKER_ANNOTATION_PROCESSOR}")
     annotationProcessor(crt)
-    annotationProcessor(mc)
-    implementation(fg.deobf("net.darkhax.bookshelf:Bookshelf-Forge-${Versions.MINECRAFT}:${Versions.BOOKSHELF}"))
-    implementation(fg.deobf("net.darkhax.botanypots:BotanyPots-Forge-${Versions.MINECRAFT}:${Versions.BOTANYPOTS}"))
+
+    modImplementation("net.darkhax.bookshelf:Bookshelf-Forge-${Versions.MINECRAFT}:${Versions.BOOKSHELF}")
+    modImplementation("net.darkhax.botanypots:BotanyPots-Forge-${Versions.MINECRAFT}:${Versions.BOTANYPOTS}")
 }
 
 tasks.create<TaskPublishCurseForge>("publishCurseForge") {
@@ -76,4 +70,8 @@ modrinth {
     dependencies {
         required.project("crafttweaker")
     }
+}
+
+tasks.jar {
+    finalizedBy("reobfJar")
 }

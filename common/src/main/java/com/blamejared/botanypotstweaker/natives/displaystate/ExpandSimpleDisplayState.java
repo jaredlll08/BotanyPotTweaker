@@ -18,6 +18,17 @@ import java.util.Optional;
 @NativeTypeRegistration(value = SimpleDisplayState.class, zenCodeName = "mods.botanypotstweaker.displaystate.SimpleDisplayState")
 public class ExpandSimpleDisplayState {
     
+    /**
+     * Creates a simple display state from the given values.
+     *
+     * @param state       The {@link BlockState} to render
+     * @param scale       An optional [x, y, z] scale to apply
+     * @param offset      An optional [x, y, z] offset to apply
+     * @param rotations   An optional list of {@link AxisAlignedRotation} to apply
+     * @param renderFluid if the blockstate has a fluid, should it be rendered?
+     *
+     * @return a new SimpleDisplayState
+     */
     @ZenCodeType.StaticExpansionMethod
     public static SimpleDisplayState of(BlockState state,
                                         @ZenCodeType.Optional @ZenCodeType.Nullable float[] scale,

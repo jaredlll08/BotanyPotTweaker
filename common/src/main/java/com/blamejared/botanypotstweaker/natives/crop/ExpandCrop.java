@@ -9,5 +9,5 @@ import net.darkhax.botanypots.data.recipes.crop.Crop;
 @Document("mods/BotanyPotsTweaker/crop/Crop")
 @NativeTypeRegistration(value = Crop.class, zenCodeName = "mods.botanypotstweaker.crop.Crop")
 public class ExpandCrop {
-    
+
 }

@@ -21,17 +21,14 @@ dependencies {
     modImplementation(crt)
     modImplementation("com.faux.fauxcustomentitydata:FauxCustomEntityData-fabric-${Versions.MINECRAFT}:${Versions.FAUX_CUSTOM_ENTITY_DATA}")
     modLocalRuntime("mezz.jei:jei-${Versions.MINECRAFT}-fabric:${Versions.JEI}")
-//    annotationProcessor("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:${Versions.CRAFTTWEAKER_ANNOTATION_PROCESSOR}")
-//    annotationProcessor(crt)
 
+    annotationProcessor("com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:${Versions.CRAFTTWEAKER_ANNOTATION_PROCESSOR}")
+    annotationProcessor(crt)
     modImplementation("net.darkhax.bookshelf:Bookshelf-Fabric-${Versions.MINECRAFT}:${Versions.BOOKSHELF}")
     modImplementation("net.darkhax.botanypots:BotanyPots-Fabric-${Versions.MINECRAFT}:${Versions.BOTANYPOTS}")
 }
 
 loom {
-    mixin {
-        defaultRefmapName.set("${Properties.MODID}.refmap.json")
-    }
     runs {
         named("client") {
             client()

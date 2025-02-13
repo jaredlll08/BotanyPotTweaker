@@ -12,6 +12,13 @@ import org.openzen.zencode.java.ZenCodeType;
 @NativeTypeRegistration(value = AbstractSimpleDisplayState.class, zenCodeName = "mods.botanypotstweaker.displaystate.AbstractSimpleDisplayState")
 public class ExpandAbstractSimpleDisplayState {
     
+    /**
+     * Gets the {@link BlockState} that will render for the given progress.
+     *
+     * @param progress the progress to render at
+     *
+     * @return the BlockState that will render for the given progress
+     */
     @ZenCodeType.Method
     public static BlockState getRenderState(AbstractSimpleDisplayState internal, float progress) {
         

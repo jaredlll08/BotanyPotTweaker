@@ -62,11 +62,11 @@ public class BasicSoilHandler implements IRecipeHandler<BasicSoil> {
         
         Ingredient ingredient = recipe.getOrThrowSingle(BuiltinRecipeComponents.Input.INGREDIENTS)
                 .asVanillaIngredient();
-        DisplayState renderState = recipe.getOrThrowSingle(BPTweakerRecipeComponents.Metadata.DISPLAY_STATES);
+        DisplayState displayState = recipe.getOrThrowSingle(BPTweakerRecipeComponents.Metadata.DISPLAY_STATES);
         float growthModifier = recipe.getOrThrowSingle(BPTweakerRecipeComponents.Metadata.GROWTH_MODIFIER);
         Set<String> soilCategories = new HashSet<>(recipe.getOrThrow(BPTweakerRecipeComponents.Metadata.SOIL_CATEGORY));
         int lightLevel = recipe.getOrThrowSingle(BPTweakerRecipeComponents.Metadata.LIGHT_LEVEL);
-        return Optional.of(new BasicSoil(name, ingredient, renderState, growthModifier, soilCategories, lightLevel));
+        return Optional.of(new BasicSoil(name, ingredient, displayState, growthModifier, soilCategories, lightLevel));
     }
     
 }

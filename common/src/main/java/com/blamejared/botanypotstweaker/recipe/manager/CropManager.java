@@ -1,13 +1,16 @@
 package com.blamejared.botanypotstweaker.recipe.manager;
 
+import com.blamejared.botanypotstweaker.BPTweakerConstants;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.CraftTweakerConstants;
 import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
 import com.blamejared.crafttweaker.api.action.recipe.ActionRemoveRecipe;
+import com.blamejared.crafttweaker.api.action.recipe.ActionRemoveRecipeByName;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
+import com.blamejared.crafttweaker.api.util.NameUtil;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.darkhax.botanypots.BotanyPotHelper;
 import net.darkhax.botanypots.data.displaystate.DisplayState;
@@ -18,9 +21,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.openzen.zencode.java.ZenCodeType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.BiFunction;
 
 /**
  * @docParam this <recipetype:botanypots:crop>
@@ -39,9 +44,9 @@ public class CropManager implements IRecipeManager<Crop> {
      * @param growthTicks    The number of growth ticks.
      * @param results        The array of harvest entries.
      * @param displayState   The display state for the crop.
-     * @param lightLevel     The optional light level.
+     * @param lightLevel     The optional light level that the crop will give off. Defaults to 0
      *
-     * @docParam id "crop_test"
+     * @docParam id "soil_test"
      * @docParam seed <item:minecraft:diamond>
      * @docParam soilCategories ["category1"]
      * @docParam growthTicks 200
@@ -66,7 +71,7 @@ public class CropManager implements IRecipeManager<Crop> {
      * @param growthTicks    The number of growth ticks.
      * @param results        The array of harvest entries.
      * @param displayStates  The array of display states for the crop.
-     * @param lightLevel     The optional light level.
+     * @param lightLevel     The optional light level that the crop will give off. Defaults to 0
      *
      * @docParam id "soil_test"
      * @docParam seed <item:minecraft:diamond>
@@ -82,6 +87,30 @@ public class CropManager implements IRecipeManager<Crop> {
         ResourceLocation rl = CraftTweakerConstants.rl(fixRecipeName(id));
         
         CraftTweakerAPI.apply(new ActionAddRecipe<>(this, new BasicCrop(rl, seed.asVanillaIngredient(), new HashSet<>(soilCategories), growthTicks, Arrays.asList(results), Arrays.asList(displayStates), lightLevel)));
+    }
+    
+    /**
+     * Modifies the given {@link BasicCrop}, replacing it with the new one from the function.
+     *
+     * @param id       The id of the crop to replace.
+     * @param modifier the modifier to apply to the crop.
+     *
+     * @return true if the crop was found, and is a {@link BasicCrop}, false otherwise.
+     *
+     * @docParam id "botanypots:minecraft/crop/wheat"
+     * @docParam modifier (id, old) => BasicCrop.of(id, old.seed, old.soilCategories, old.growthTicks / 2, old.results, old.displayStates, old.lightLevel)
+     */
+    @ZenCodeType.Method
+    public boolean modify(String id, BiFunction<ResourceLocation, BasicCrop, BasicCrop> modifier) {
+        
+        Crop crop = getRecipeList().get(id);
+        if(crop instanceof BasicCrop bc) {
+            ResourceLocation name = new ResourceLocation(id);
+            CraftTweakerAPI.apply(new ActionRemoveRecipeByName<>(this, name));
+            CraftTweakerAPI.apply(new ActionAddRecipe<>(this, modifier.apply(name, bc)));
+            return true;
+        }
+        return false;
     }
     
     @Override

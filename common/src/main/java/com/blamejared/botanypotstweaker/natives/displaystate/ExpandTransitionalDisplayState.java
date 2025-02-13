@@ -14,6 +14,12 @@ import java.util.List;
 @NativeTypeRegistration(value = TransitionalDisplayState.class, zenCodeName = "mods.botanypotstweaker.displaystate.TransitionalDisplayState")
 public class ExpandTransitionalDisplayState {
     
+    /**
+     * Creates a TransitionalDisplayState object from a given DisplayState.
+     *
+     * @param state The DisplayState object to be included in the TransitionalDisplayState.
+     * @return A TransitionalDisplayState object created from the given DisplayState.
+     */
     @ZenCodeType.StaticExpansionMethod
     public static TransitionalDisplayState of(DisplayState state) {
         

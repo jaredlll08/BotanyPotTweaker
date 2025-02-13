@@ -13,7 +13,7 @@ public class Services {
     
     public static final PlatformService PLATFORM = Services.load();
     
-    // A little of cursed code, just as a little treat
+    // A little bit of cursed code, just as a little treat
     @SafeVarargs
     public static <T> T load(T... arr) {
         

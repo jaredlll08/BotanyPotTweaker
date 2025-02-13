@@ -26,15 +26,5 @@
   },
   "recommends": {
     "fabric": "*"
-  },
-  "mixins": [
-    {
-      "config": "botanypotstweaker.mixins.json",
-      "environment": "*"
-    },
-    {
-      "config": "botanypotstweaker.fabric.mixins.json",
-      "environment": "*"
-    }
-  ]
+  }
 }

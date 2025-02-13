@@ -3,6 +3,7 @@ package com.blamejared.botanypotstweaker.recipe.manager;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
 import com.blamejared.crafttweaker.api.CraftTweakerConstants;
 import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
+import com.blamejared.crafttweaker.api.action.recipe.ActionRemoveRecipeByName;
 import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
@@ -19,6 +20,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import org.openzen.zencode.java.ZenCodeType;
 
 import java.util.Arrays;
+import java.util.function.BiFunction;
 
 /**
  * @docParam this <recipetype:botanypots:pot_interaction>
@@ -65,6 +67,30 @@ public class PotInteractionManager implements IRecipeManager<PotInteraction> {
                 Optionull.map(newSeedStack, IItemStack::getInternal),
                 sound,
                 Lists.transform(Arrays.asList(extraDrops), IItemStack::getInternal))));
+    }
+    
+    /**
+     * Modifies the given {@link BasicPotInteraction}, replacing it with the new one from the function.
+     *
+     * @param id       The id of the interaction to replace.
+     * @param modifier the modifier to apply to the interaction.
+     *
+     * @return true if the interaction was found, and is a {@link BasicPotInteraction}, false otherwise.
+     *
+     * @docParam id "botanypots:minecraft/pot_interaction/till_farmland"
+     * @docParam modifier (id, old) => BasicPotInteraction.of(id, old.heldTest, old.damageHeld, old.soilTest, old.seedTest, old.newSoilStack, old.newSeedStack, old.sound, old.extraDrops)
+     */
+    @ZenCodeType.Method
+    public boolean modify(String id, BiFunction<ResourceLocation, BasicPotInteraction, BasicPotInteraction> modifier) {
+        
+        PotInteraction interaction = getRecipeList().get(id);
+        if(interaction instanceof BasicPotInteraction bpi) {
+            ResourceLocation name = new ResourceLocation(id);
+            CraftTweakerAPI.apply(new ActionRemoveRecipeByName<>(this, name));
+            CraftTweakerAPI.apply(new ActionAddRecipe<>(this, modifier.apply(name, bpi)));
+            return true;
+        }
+        return false;
     }
     
     @Override
