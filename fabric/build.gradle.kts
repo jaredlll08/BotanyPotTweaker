@@ -60,6 +60,7 @@ modrinth {
     changelog.set(GMUtils.smallChangelog(project, Properties.GIT_REPO))
     versionName.set("Fabric-${Versions.MINECRAFT}-$version")
     versionType.set("release")
+    loaders.add("fabric")
     uploadFile.set(tasks.remapJar.get())
     dependencies {
         required.project("crafttweaker")

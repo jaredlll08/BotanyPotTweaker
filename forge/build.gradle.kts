@@ -66,7 +66,9 @@ modrinth {
     changelog.set(GMUtils.smallChangelog(project, Properties.GIT_REPO))
     versionName.set("Forge-${Versions.MINECRAFT}-$version")
     versionType.set("release")
+    gameVersions.set(listOf(Versions.MINECRAFT))
     uploadFile.set(tasks.jar.get())
+    loaders.add("forge")
     dependencies {
         required.project("crafttweaker")
     }
